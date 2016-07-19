@@ -1,0 +1,140 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" Syntax coloring
+syntax on		      " syntax highlighting
+
+" Highlight search matches
+set hlsearch
+
+" Show always status bar
+set laststatus=2
+
+" Display line numbers
+set nu
+
+" Use 4 blank space for tab
+set tabstop=4
+
+" Use relative number 
+set relativenumber 
+
+" Auto change from relative to absolute numbers
+autocmd InsertEnter * :set number
+autocmd InsertLeave * :set relativenumber
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-fugitive'
+
+" plugin from http://vim-scripts.org/vim/scripts.html
+" Plugin 'L9'
+" Git plugin not hosted on GitHub
+Plugin 'git://git.wincent.com/command-t.git'
+
+" git repos on your local machine (i.e. when working on your own plugin)
+" Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Install L9 and avoid a Naming conflict if you've already installed a
+" different version somewhere else.
+Plugin 'ascenator/L9', {'name': 'newL9'}
+
+" Plugin to search/repace globally
+Plugin 'greplace.vim'
+
+" NERD Tree with GIT support
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+" Open NERDTree automatically when vim starts up
+" autocmd vimenter * NERDTree
+
+" Open NERDTree automatically when no files are specified to vim
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Open NERDTree with Ctrl + N 
+map <C-n> :NERDTreeToggle<CR>
+
+" Vim-airline plugin
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+" indentLine
+Plugin 'Yggdroot/indentLine'
+let g:indentLine_enabled = 1
+
+Plugin 'dbext.vim'
+
+" Enable tabs
+let g:airline#extensions#tabline#enabled = 1
+" Enable powerline icons
+let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 1
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" airline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+" shortcuts to move between buffers
+map <C-k> :bn<CR>
+map <C-j> :bp<CR>
+
+" Ctrl P 
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+" Define ignored directories
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip " Default
+set wildignore+=*/build/*,*/target/*,*/out/*,*.class " Java output files
+set wildignore+=*.ipr,*.iws " IDEA files
+" :helptags ~/.vim/bundle/ctrlp.vim/doc
+
