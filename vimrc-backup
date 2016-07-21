@@ -2,7 +2,7 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " Syntax coloring
-syntax on		      " syntax highlighting
+syntax on
 
 " Highlight search matches
 set hlsearch
@@ -20,14 +20,16 @@ set tabstop=4
 set relativenumber 
 
 " Auto change from relative to absolute numbers
-autocmd InsertEnter * :set number
 autocmd InsertLeave * :set relativenumber
+autocmd InsertEnter * :set norelativenumber
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
+
 call vundle#begin()
+
 " alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+" call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
@@ -58,6 +60,15 @@ Plugin 'greplace.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 
+" Vim-airline plugin
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+" indentLine
+Plugin 'Yggdroot/indentLine'
+let g:indentLine_enabled = 1
+
+Plugin 'dbext.vim'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -77,64 +88,34 @@ filetype plugin indent on    " required
 " autocmd vimenter * NERDTree
 
 " Open NERDTree automatically when no files are specified to vim
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " Open NERDTree with Ctrl + N 
-map <C-n> :NERDTreeToggle<CR>
-
-" Vim-airline plugin
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-
-" indentLine
-Plugin 'Yggdroot/indentLine'
-let g:indentLine_enabled = 1
-
-Plugin 'dbext.vim'
+" map <C-n> :NERDTreeToggle<CR>
 
 " Enable tabs
 let g:airline#extensions#tabline#enabled = 1
+
 " Enable powerline icons
-let g:airline_powerline_fonts = 1
 let g:airline_powerline_fonts = 1
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
-" unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
-
-" airline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
-
 " shortcuts to move between buffers
 map <C-k> :bn<CR>
 map <C-j> :bp<CR>
 
+set runtimepath^=/.vim/bundle/vim-numbertoggle
+
 " Ctrl P 
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+helptags ~/.vim/bundle/ctrlp.vim/doc
+
 " Define ignored directories
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip " Default
 set wildignore+=*/build/*,*/target/*,*/out/*,*.class " Java output files
 set wildignore+=*.ipr,*.iws " IDEA files
-" :helptags ~/.vim/bundle/ctrlp.vim/doc
 
