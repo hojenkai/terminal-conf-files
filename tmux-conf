@@ -97,5 +97,5 @@ set -g status-justify centre
 # }
 #
 # this is required with macOS 10.12
-# run `brew install reattach-to-user-namespace`
-set-option -g default-command "reattach-to-user-namespace -l bash"
+# require to run `brew install reattach-to-user-namespace` and restart before using
+set-option -g default-command "reattach-to-user-namespace -l fish"
