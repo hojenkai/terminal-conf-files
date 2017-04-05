@@ -13,6 +13,9 @@ set -sg escape-time 1
 # Ensure that we can send Ctrl-A to other apps
 bind C-a send-prefix
 
+# Turn off automatic window rename
+set-option -g allow-rename off
+
 # Set the base index for windows to 1 instead of 0
 set -g base-index 1
 
@@ -62,7 +65,6 @@ setw -g window-status-attr dim
 # set colors for the active window {
 setw -g window-status-current-fg black
 setw -g window-status-current-bg yellow
-setw -g window-status-current-attr white
 # }
 
 # pane colors {
@@ -81,7 +83,6 @@ set -g message-attr bright
 # Status line left side {
 set -g status-left-length 40
 set -g status-left "#[fg=blue]Session: #S #[fg=yellow]#I #[fg=cyan]#P"
-set -g status-utf8 on
 # }
 
 # Status line right side {
@@ -96,5 +97,5 @@ set -g status-justify centre
 # }
 #
 # this is required with macOS 10.12
-set-option -g default-command "reattach-to-user-namespace -l fish"
-
+# run `brew install reattach-to-user-namespace`
+set-option -g default-command "reattach-to-user-namespace -l bash"

@@ -7,19 +7,30 @@ set hidden
 set hlsearch
 set laststatus=2
 set tabstop=4
+set shiftwidth=4 expandtab
+
+" execute 'highlight Comment ' . pinnacle#italicize('Comment')
+" execute 'highlight link EndOfBuffer ColorColumn'
+
+" autocmd FileType javascript,typescript,json setlocal foldmarker={,}
+"
+" ===========================================
+
+" =============== FOLD OPTIONS ==============
 set foldenable
 set foldmethod=indent
 set foldlevel=1
-autocmd FileType javascript,typescript,json setlocal foldmarker={,}
-hi Folded ctermbg=none
-hi Visual  guifg=#000000 guibg=#014804 gui=none
-"
+highlight Folded ctermbg=gray
+highlight Folded ctermfg=black
+" hi Folded ctermbg=none
+" hi Visual  guifg=#000000 guibg=#014804 gui=none
 " ===========================================
 
 " ============= RELATIVE NUMBERS ============ 
 set relativenumber 
 autocmd InsertLeave * :set relativenumber
-autocmd InsertEnter * :set nu
+autocmd InsertEnter * :set relativenumber! number
+
 " ===========================================
 
 
@@ -52,6 +63,7 @@ Plugin 'tpope/vim-fugitive'
 " different version somewhere else.
 Plugin 'ascenator/L9', {'name': 'newL9'}
 
+Plugin 'chriskempson/base16-vim'
 " Plugin to search/repace globally
 Plugin 'greplace.vim'
 
@@ -72,16 +84,17 @@ Plugin 'fatih/vim-go'
 
 " ============ JAVASCRIPT PLUGINS ===========
 " Syntax highlighting and improved indentation
-Plugin 'jelera/vim-javascript-syntax'
+" Plugin 'jelera/vim-javascript-syntax'
+Plugin 'pangloss/vim-javascript'
 
 " Complete square and curly braces and parenthesees
 Plugin 'Raimondi/delimitMate'
 
 " Go to definition, code refactoring
-Plugin 'marijnh/tern_for_vim'
+" Plugin 'marijnh/tern_for_vim'
 
 " Code vim - scratch pad 
-Plugin 'metakirby5/codi.vim'
+" Plugin 'metakirby5/codi.vim'
 
 " This does what it says on the tin. It will check your file on open too, not just on save.
 " " You might not want this, so just leave it out if you don't.
@@ -144,3 +157,10 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip " Default
 set wildignore+=*/build/*,*/target/*,*/out/*,*.class " Java output files
 set wildignore+=*.ipr,*.iws " IDEA files
 set wildignore+=*/node_modules " Node modules
+
+" Load .vimrx_background if present
+if filereadable(expand("~/.vimrc_background"))
+	let base16colorspace=256
+	source ~/.vimrc_background
+endif
+
