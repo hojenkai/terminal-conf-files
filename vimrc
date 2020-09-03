@@ -1,166 +1,174 @@
-" ============== GENERAL CONFIG ============= 
-" set nocompatible
-" filetype plugin indent on  " Load plugins according to detected filetype.
-syntax on
-filetype on 
-set hidden
-set hlsearch
-set laststatus=2
-set tabstop=4
-set shiftwidth=4 expandtab
+packadd minpac
+call minpac#init()
 
-" execute 'highlight Comment ' . pinnacle#italicize('Comment')
-" execute 'highlight link EndOfBuffer ColorColumn'
+" minpac commands
+command! PackUpdate call minpac#update()
+command! PackClean call minpac#clean()
 
-" autocmd FileType javascript,typescript,json setlocal foldmarker={,}
-"
-" ===========================================
+" Vim IDE {
+  " package-manager
+  call minpac#add('k-takata/minpac', {'type': 'opt'})
 
-" =============== FOLD OPTIONS ==============
-set foldenable
-set foldmethod=indent
-set foldlevel=1
-highlight Folded ctermbg=gray
-highlight Folded ctermfg=black
-" hi Folded ctermbg=none
-" hi Visual  guifg=#000000 guibg=#014804 gui=none
-" ===========================================
+  " Plugins {
+    " Complete square and curly braces and parenthesees
+    " call minpac#add('Raimondi/delimitMate')
+    " call minpac#add('jiangmiao/auto-pairs')
+    " call minpac#add('cohama/lexima.vim')
+    
+    " NerdTree
+    call minpac#add('scrooloose/nerdtree')
+    call minpac#add('Xuyuanp/nerdtree-git-plugin')
+    call minpac#add('tiagofumo/vim-nerdtree-syntax-highlight')
+    call minpac#add('ryanoasis/vim-devicons')
 
-" ============= RELATIVE NUMBERS ============ 
-set relativenumber 
-autocmd InsertLeave * :set relativenumber
-autocmd InsertEnter * :set relativenumber! number
+    " Airline
+    call minpac#add('vim-airline/vim-airline')
+    call minpac#add('vim-airline/vim-airline-themes')
 
-" ===========================================
+    " Snippets
+    call minpac#add('sirver/ultisnips')
+
+    " Ctrl P  {
+      set runtimepath^=~/.vim/pack/bundle/start/ctrlp
+      helptags ~/.vim/pack/bundle/start/ctrlp
+    " }
+
+    " Go  {
+      call minpac#add('fatih/vim-go')
+    " }
+
+    " JavaSCript {
+      " Syntax highlighting and improved indentation
+      call minpac#add('pangloss/vim-javascript')
+      " call minpac#add('othree/yajs.vim')
+
+      " typescript
+      " call minpac#add('leafgarland/typescript-vim')
+      call minpac#add('peitalin/vim-jsx-typescript')
+      " call minpac#add('HerringtonDarkholme/yats.vim')
+    " }
+
+    " Terraform {
+      call minpac#add('hashivim/vim-terraform')
+    " }
+  " }
+" }
+
+" File generics {
+  syntax on
+  filetype on 
+
+  " colorschemes located in ~/.config/nvim/colors/
+  " checkout the file ~/.config/nvim/initi.vim
+  " to see what colorscheme is being applied
+  
+  " general {
+    set encoding=UTF-8
+    set background=dark
+    set smartindent
+    set hidden
+    set number
+    set hlsearch
+
+    " highlight pattern matching while typing
+    set incsearch
+
+    " See the following link for more color numbers in xterm 256:
+    " https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg
+    " See this thread for more info about color config:
+    " https://stackoverflow.com/a/16014807
+    highlight Visual ctermbg=242 cterm=bold
+    highlight Search ctermbg=222 ctermfg=233
+
+    " Use a nerd-tree font with devicons
+    " See https://github.com/ryanoasis/vim-devicons/wiki/Installation 
+    " for how to install fonts and select it in the iTerm text configuration
+    " Select a Non-ASCII font in iterm. I.e. font-hack-nerd-font
+    set guifont=Meslo\ Nerd\ Font\ 13
+  " }
+
+  " tab stop config {
+    set laststatus=2
+    set tabstop=2
+    set shiftwidth=2 expandtab
+  " }
+
+  " folding {
+    set foldenable
+    set foldlevel=1
+    set foldmethod=indent
+    highlight Folded ctermbg=239
+    highlight Folded ctermfg=gray
+  " }
+
+  " relative-numbers {
+    set relativenumber 
+    autocmd InsertLeave * :set relativenumber
+    autocmd InsertEnter * :set relativenumber! number
+  " }
+
+  " general-remaps {
+    " search for selected text
+    vnoremap // y/<C-R>"<CR>"
+  " }
+
+  " buffer mappings {
+    map <C-k> :bn<CR>
+    map <C-j> :bp<CR>
+    map <C-x> :bw<CR>
+  " }
+" }
 
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" Plugin Configuration 
+" NerdTree {
+  let g:NERDTreeWinSize=45
+  let NERDTreeShowHidden=1
+  let g:NERDTreeWinPos = "right"
+  let g:NERDTreeRespectWildIgnore = 1
+  map <C-n> :NERDTreeToggle<CR>
+" }
 
-" alternatively, pass a path where Vundle should install plugins
-" call vundle#begin('~/some/path/here')
+" Airline {
+  if !exists('g:airline_symbols')
+      let g:airline_symbols = {}
+  endif
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline_powerline_fonts = 1
+  let g:airline_theme='kolor'
+" }
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" Go cmd mappings {
+  map <leader>b :GoBuild<CR>
+  map <leader>t :GoTest<CR>
+" }
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-Plugin 'tpope/vim-fugitive'
+" UltiSnips {
+  let g:UltiSnipsExpandTrigger="<tab>"
+  let g:UltiSnipsJumpForwardTrigger="<tab>"
+  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+  let g:UltiSnipsSnippetsDir="/Users/victor.rojas/.vim/ultisnips"
+" }
 
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
-" Git plugin not hosted on GitHub
-" Plugin 'git://git.wincent.com/command-t.git'
+" Define ignored directories {
+  set wildignore+=*/tmp/*,*.so,*.swp,*.zip " Default
+  set wildignore+=*/out/*,*.class " Java output files
+  set wildignore+=*.ipr,*.iws,*.iml " IDEA files
+  set wildignore+=*/node_modules " Node modules
+  set wildignore+=*/vendor " Golang vendor folder
+  set wildignore+=*/coverage/lcov-report " codecov reports
+  set wildignore+=*/build/lib " unpackaged jar lib files
+  set wildignore+=*/build/bin " unpackaged jar bin files
+  set wildignore+=*/target " unpackaged jar bin files
+" }
 
-" git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-Plugin 'ascenator/L9', {'name': 'newL9'}
+" typescript-vim {
+  let g:typescript_compiler_binary = ''
+  let g:typescript_compiler_options = '' 
+" }
 
-Plugin 'chriskempson/base16-vim'
-" Plugin to search/repace globally
-Plugin 'greplace.vim'
-
-" NERD Tree with GIT support
-Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-
-" Vim-airline plugin
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-
-" Snippets
-Plugin 'SirVer/ultisnips'
-
-" ============= GO LANG PLUGINS =============
-Plugin 'fatih/vim-go'
-" ===========================================
-
-" ============ JAVASCRIPT PLUGINS ===========
-" Syntax highlighting and improved indentation
-" Plugin 'jelera/vim-javascript-syntax'
-Plugin 'pangloss/vim-javascript'
-
-" Complete square and curly braces and parenthesees
-Plugin 'Raimondi/delimitMate'
-
-" Go to definition, code refactoring
-" Plugin 'marijnh/tern_for_vim'
-
-" Code vim - scratch pad 
-" Plugin 'metakirby5/codi.vim'
-
-" This does what it says on the tin. It will check your file on open too, not just on save.
-" " You might not want this, so just leave it out if you don't.
-let g:syntastic_check_on_open=1
-imap <C-c> <CR><Esc>O
-" ===========================================
-
-Plugin 'dbext.vim'
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
-" Open NERDTree automatically when vim starts up
-" autocmd vimenter * NERDTree
-
-" ================ NERD TREE ================
-" Open nerd tree when no files specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-let g:NERDTreeWinPos = "right"
-map <C-n> :NERDTreeToggle<CR>
-" ===========================================
-"
-
-" ================= AIRLINE =================
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-let g:airline_theme='badwolf'
-
-map <C-k> :bn<CR>
-map <C-j> :bp<CR>
-" ===========================================
-"
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
-" Ctrl P 
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-helptags ~/.vim/bundle/ctrlp.vim/doc
-
-" Define ignored directories
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip " Default
-set wildignore+=*/build/*,*/target/*,*/out/*,*.class " Java output files
-set wildignore+=*.ipr,*.iws " IDEA files
-set wildignore+=*/node_modules " Node modules
-
-" Load .vimrx_background if present
-if filereadable(expand("~/.vimrc_background"))
-	let base16colorspace=256
-	source ~/.vimrc_background
-endif
-
+" vim-go {
+  " disable vim-go :GoDef short cut (gd)
+  " this is handled by LanguageClient [LC]
+  let g:go_def_mapping_enabled = 0
+" }
